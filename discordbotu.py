@@ -17,6 +17,8 @@ async def on_message(message):
         return
     if message.content.startswith('$merhaba'):
         await message.channel.send("Selam!")
+    elif message.content.startswith('$naber'):
+        await message.channel.send("İyiyim, sizden naber?")
     elif message.content.startswith('$bye'):
         await message.channel.send("\U0001f642")
     elif message.content.startswith('Şifre oluştur'):
