@@ -1,29 +1,64 @@
 import discord
-import sifre_call
-# ayricaliklar (intents) değişkeni botun ayrıcalıklarını depolayacak
+from discord.ext import commands
+import random
+
 intents = discord.Intents.default()
-# Mesajları okuma ayrıcalığını etkinleştirelim
 intents.message_content = True
-# client (istemci) değişkeniyle bir bot oluşturalım ve ayrıcalıkları ona aktaralım
-client = discord.Client(intents=intents)
 
-@client.event
+bot = commands.Bot(command_prefix='$', intents=intents)
+
+@bot.event
 async def on_ready():
-    print(f'{client.user} olarak giriş yaptık.')
+    print(f'{bot.user} olarak giriş yaptık')
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-    if message.content.startswith('$merhaba'):
-        await message.channel.send("Selam!")
-    elif message.content.startswith('$naber'):
-        await message.channel.send("İyiyim, sizden naber?")
-    elif message.content.startswith('$bye'):
-        await message.channel.send("\U0001f642")
-    elif message.content.startswith('Şifre oluştur'):
-        await message.channel.send(sifre_call.sifre(8))    
+@bot.command()
+async def hello(ctx):
+    await ctx.send(f'Merhaba! Ben {bot.user}, bir Discord sohbet botuyum!')
+
+@bot.command()
+async def heh(ctx, count_heh = 5):
+    await ctx.send("he" * count_heh)
+
+@bot.command()
+async def topla(ctx, a=0,b=0):
+    await ctx.send(a+b)
+
+@bot.command()
+async def çıkar(ctx, a=0,b=0):
+    await ctx.send(a-b)
+
+@bot.command()
+async def çarp(ctx, a=0,b=0):
+    await ctx.send(a*b)
+
+@bot.command()
+async def böl(ctx, a=0,b=0):
+    await ctx.send(a/b)
+
+@bot.command()
+async def üs_alma(ctx, a=0,b=0):
+    await ctx.send(a**b)
+
+@bot.command()
+async def bölme_kalan(ctx, a=0,b=0):
+    await ctx.send(a%b)
+
+@bot.command()
+async def zar_oyunu(ctx, a=0):
+    x=random.randint(1,6)
+    if x==a:
+        await ctx.send("Doğru cevap")
+    if x!=a:
+        await ctx.send(f"Yanlış cevap. Doğru cevap {x} olmalıydı.")
+
+@bot.command()
+async def yazı_tura(ctx, a):
+    a=a.lower()
+    y=["yazı","tura","dik"]
+    x=random.choice(y)
+    if a==x:
+        await ctx.send("Tutturdun.")
     else:
-        await message.channel.send(message.content)
+        await ctx.send(f"Tutturamadın, {x} olmalıydı.")
 
-client.run("")
+bot.run("")
