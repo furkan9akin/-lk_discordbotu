@@ -61,4 +61,14 @@ async def yazı_tura(ctx, a):
     else:
         await ctx.send(f"Tutturamadın, {x} olmalıydı.")
 
+@bot.command()
+async def sayi_tahmin_et(ctx,a=0):
+    x=random.randint(1,100)
+    if x==a:
+        await ctx.send("Doğru bildin.")
+    elif abs(a-x)<=50:
+        await ctx.send(f"Tahminin doğru sayıya {abs(a-x)} uzaklığında.")
+    else:
+        await ctx.send("Doğru sayıya uzaksın.")
+
 bot.run("")
